@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ALIX LOZZ | V1 GEN 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dasar: '#050505',
+                        merahTerang: '#ff2b2b',
+                        merahGrad1: '#cc0000',
+                        merahGrad2: '#ff4d4d',
+                        merahGelap: '#1a0000',
+                        garisMerah: '#5c1010',
+                        teksAbu: '#999999',
+                        hijau: '#22c55e',
+                        merah: '#ef4444',
+                    },
+                    fontFamily: {
+                        futur: ['"Orbitron"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .cahaya-merah {
+                box-shadow: 0 0 25px rgba(255, 43, 43, 0.25);
+            }
+            .cahaya-dalam {
+                box-shadow: inset 0 0 15px rgba(255, 43, 43, 0.08);
+            }
+            .garis-merah {
+                border: 1px solid rgba(255, 43, 43, 0.25);
+            }
+            .tekan {
+                transition: all 0.15s ease;
+                cursor: pointer;
+            }
+            .tekan:active {
+                transform: scale(0.97);
+                filter: brightness(1.3);
+            }
+            .denyut {
+                animation: denyut 2.5s ease-in-out infinite;
+            }
+            @keyframes denyut {
+                0%, 100% { box-shadow: 0 0 20px rgba(255, 43, 43, 0.15); }
+                50% { box-shadow: 0 0 35px rgba(255, 43, 43, 0.35); }
+            }
+            .putar { animation: putar 4s linear infinite; }
+            .putar-balik { animation: putar 6s linear infinite reverse; }
+            .kilau { animation: kilau 3s ease-in-out infinite; }
+            .naik-turun { animation: naikTurun 2.5s ease-in-out infinite; }
+            @keyframes putar { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            @keyframes kilau { 0%,100% { filter:brightness(1) drop-shadow(0 0 5px #ff2b2b); } 50% { filter:brightness(1.4) drop-shadow(0 0 15px #ff4d4d); } }
+            @keyframes naikTurun { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-6px); } }
+
+            .bintang {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                background: #ffffff;
+                border-radius: 50%;
+                opacity: 0;
+                animation: kelip 4s ease-in-out infinite;
+            }
+            .bintang-merah {
+                background: #ff2b2b;
+                box-shadow: 0 0 2px #ff2b2b;
+            }
+            @keyframes kelip {
+                0%, 100% { opacity: 0; }
+                50% { opacity: 0.4; }
+            }
+
+            .halaman { display: none; }
+            .aktif { display: flex; }
+
+            .menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                background: #120000;
+                border-right: 1px solid rgba(255, 43, 43, 0.25);
+                box-shadow: 5px 0 15px rgba(0,0,0,0.6);
+                z-index: 999;
+                transition: left 0.3s ease;
+                padding: 30px 20px;
+            }
+            .menu.buka { left: 0; }
+            .tutup-lapisan {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.6);
+                z-index: 998;
+                display: none;
+            }
+            .tutup-lapisan.aktif { display: block; }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="bg-dasar text-white font-futur min-h-screen overflow-x-hidden">
+
+    <div id="lapisanTutup" class="tutup-lapisan" onclick="tutupMenu()"></div>
+
+    <!-- MENU SISI -->
+    <div id="menuSisi" class="menu">
+        <div class="flex justify-between items-center mb-12">
+            <h3 class="text-2xl font-bold text-merahTerang tracking-wider">MENU UTAMA</h3>
+            <button onclick="tutupMenu()" class="text-merahTerang text-2xl tekan">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+        <ul class="space-y-6 pl-2">
+            <li><a href="#" onclick="bukaHalaman1(); tutupMenu(); return false;" class="flex items-center gap-4 py-2 text-lg text-merahTerang tekan hover:bg-merahTerang/10 rounded-lg px-2">
+                <i class="fa fa-home text-xl"></i> Halaman Utama
+            </a></li>
+            <li><a href="#" class="flex items-center gap-4 py-2 text-lg text-merahTerang tekan hover:bg-merahTerang/10 rounded-lg px-2">
+                <i class="fa fa-user text-xl"></i> Profil
+            </a></li>
+            <li><a href="#" class="flex items-center gap-4 py-2 text-lg text-merahTerang tekan hover:bg-merahTerang/10 rounded-lg px-2">
+                <i class="fa fa-cog text-xl"></i> Tetapan
+            </a></li>
+            <li><a href="#" class="flex items-center gap-4 py-2 text-lg text-merahTerang tekan hover:bg-merahTerang/10 rounded-lg px-2">
+                <i class="fa fa-info-circle text-xl"></i> Tentang
+            </a></li>
+        </ul>
+    </div>
+
+    <div id="bintangKonteks" class="fixed inset-0 z-0"></div>
+
+
+    <!-- ==================== HALAMAN 1: MULA ==================== -->
+    <div id="halaman1" class="halaman aktif relative z-10 w-full min-h-screen flex flex-col items-center justify-start px-6 pt-8">
+
+        <div class="w-full max-w-md mb-8 self-start">
+            <p class="text-merahTerang text-base font-semibold flex items-center gap-2 tracking-wider">
+                <span class="w-2 h-2 rounded-full bg-merahTerang"></span>
+                Selamat datang ALIX LOZZ 
+            </p>
+        </div>
+
+        <div class="w-full max-w-md h-[420px] bg-transparent rounded-[24px] garis-merah cahaya-dalam mb-10 flex items-center justify-center relative overflow-hidden">
+            <div class="absolute w-44 h-44 border border-merahTerang/20 rounded-full putar"></div>
+            <div class="absolute w-36 h-36 border border-merahTerang/30 rounded-full putar-balik"></div>
+            <div class="absolute w-28 h-28 border border-merahTerang/40 rounded-full denyut"></div>
+
+            <div class="text-center z-10">
+                <h2 class="text-4xl font-extrabold text-merahTerang tracking-widest kilau">ALIX</h2>
+                <h3 class="text-2xl font-bold text-merahTerang/80 tracking-wider mt-2">LOZZ</h3>
+            </div>
+        </div>
+
+        <button onclick="bukaHalaman2()" class="w-full max-w-md py-4 rounded-[9999px] bg-gradient-to-r from-merahGrad1 to-merahGrad2 text-white text-lg font-bold tracking-widest cahaya-merah tekan mb-5">
+            LOGIN
+        </button>
+
+        <a href="https://t.me/AbdlaDoz" target="_blank" class="w-full max-w-md py-3 rounded-[9999px] bg-transparent garis-merah text-merahTerang text-base font-semibold tracking-wider flex items-center justify-center gap-2 tekan">
+            <i class="fa fa-paper-plane"></i> GET ACCESS
+        </a>
+
+    </div>
+
+
+    <!-- ==================== HALAMAN 2: LOGIN ==================== -->
+    <div id="halaman2" class="halaman relative z-10 w-full min-h-screen flex flex-col items-center justify-center px-6 py-10">
+
+        <div class="w-44 h-44 rounded-full bg-transparent garis-merah cahaya-dalam denyut flex flex-col items-center justify-center mb-12">
+            <span class="text-4xl font-extrabold text-merahTerang tracking-widest leading-tight">ALIX<br>LOZZ</span>
+        </div>
+
+        <h1 class="text-[clamp(30px,7vw,40px)] font-bold text-merahTerang mb-3">Welcome Back</h1>
+        <p class="text-teksAbu text-lg mb-16">Sign in to continue</p>
+
+        <div class="w-full max-w-md bg-transparent rounded-[24px] garis-merah cahaya-dalam p-8">
+
+            <div id="notif" class="hidden mb-6 py-3 px-4 rounded-lg text-center font-semibold"></div>
+
+            <div class="relative mb-7">
+                <i class="fa fa-user text-merahTerang absolute left-6 top-1/2 -translate-y-1/2 text-lg"></i>
+                <input type="text" id="namaPengguna" placeholder="Username" class="w-full bg-transparent rounded-[16px] garis-merah py-4 pl-16 pr-4 text-lg outline-none">
+            </div>
+
+            <div class="relative mb-9">
+                <i class="fa fa-lock text-merahTerang absolute left-6 top-1/2 -translate-y-1/2 text-lg"></i>
+                <input type="password" id="kataLaluan" placeholder="Password" class="w-full bg-transparent rounded-[16px] garis-merah py-4 pl-16 pr-12 text-lg outline-none">
+                <button onclick="tunjukSembunyi()" type="button" class="absolute right-6 top-1/2 -translate-y-1/2 text-lg text-merahTerang tekan">
+                    <i id="ikonMata" class="fa fa-eye-slash"></i>
+                </button>
+            </div>
+
+            <button onclick="semakLogin()" class="w-full py-4 rounded-[16px] bg-gradient-to-r from-merahGrad1 to-merahGrad2 text-white text-xl font-bold tracking-widest cahaya-merah tekan">
+                SIGN IN
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==================== HALAMAN 3: SISTEM BANNED ==================== -->
+    <div id="halaman3" class="halaman relative z-10 w-full min-h-screen flex flex-col items-center px-6 py-10">
+
+        <button onclick="bukaMenu()" class="absolute top-5 left-5 text-merahTerang text-xl tekan z-20">
+            <i class="fa fa-bars"></i>
+        </button>
+
+        <h1 class="text-[clamp(28px,7vw,38px)] font-bold text-merahTerang tracking-wider mt-8 mb-1">BANNED WHATSAPP</h1>
+        <p class="text-merahTerang/70 text-base mb-8 tracking-widest">ALIX LOZ</p>
+
+        <div class="w-full max-w-md rounded-[16px] overflow-hidden border border-merahTerang/20 mb-6 shadow-lg shadow-red-900/20">
+            <video src="https://rerofya.github.io/resources/video-02.webm" autoplay loop muted class="w-full h-52 object-cover"></video>
+        </div>
+
+        <div class="w-full max-w-md flex gap-1 mb-6">
+            <div class="flex-1 py-3 text-center font-bold bg-merahGelap/60 border-b-2 border-merahTerang text-merahTerang rounded-t-lg">BANNED</div>
+        </div>
+
+        <div class="w-full max-w-md space-y-4">
+            <input type="text" id="nombor" placeholder="Masukkan nombor target (contoh: 60123456789)" class="w-full bg-black/50 border border-gray-700 rounded-lg px-4 py-3.5 text-white outline-none focus:border-merahTerang focus:ring-1 focus:ring-merahTerang transition">
+
+            <select id="jenis" class="w-full bg-black/50 border border-amber-500/60 rounded-lg px-4 py-3.5 text-white outline-none focus:border-amber-400 transition">
+                <option>🚫 Spam Report</option>
+                <option>🛡️ Spam Killer</option>
+                <option>⏳ Banned Sementara</option>
+            </select>
+
+            <button onclick="mulakanSistem()" class="w-full py-4 bg-black border-2 border-merahTerang text-merahTerang font-bold text-lg tracking-wider rounded-lg hover:bg-merahTerang hover:text-black transition-all duration-200 active:scale-98">
+                🚀 BENNEN 🚫🚫
+            </button>
+
+        <div class="w-full max-w-md mt-6 space-y-3">
+            <div class="bg-black/40 border border-gray-800 rounded-lg px-4 py-3 flex items-center justify-between">
+                <span class="text-gray-300">✅ Selamat datang</span>
+                <div class="w-3 h-3 rounded-full bg-hijau shadow-[0_0_6px_#22c55e]"></div>
+            </div>
+            <div class="bg-black/40 border border-gray-800 rounded-lg px-4 py-3 flex items-center justify-between">
+                <span class="text-gray-300">⚠️ Sila masukkan nombor +60 sasaran</span>
+                <div class="w-3 h-3 rounded-full bg-amber-500 shadow-[0_0_6px_#f59e0b]"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        // TUKAR HALAMAN
+        function tutupSemuaHalaman() {
+            document.querySelectorAll('.halaman').forEach(h => h.classList.remove('aktif'));
+        }
+        function bukaHalaman1() {
+            tutupSemuaHalaman();
+            document.getElementById('halaman1').classList.add('aktif');
+        }
+        function bukaHalaman2() {
+            tutupSemuaHalaman();
+            document.getElementById('halaman2').classList.add('aktif');
+        }
+        function bukaHalaman3() {
+            tutupSemuaHalaman();
+            document.getElementById('halaman3').classList.add('aktif');
+        }
+
+        // TUNJUK / SEMBUNYI KATA LALUAN
+        function tunjukSembunyi() {
+            let input = document.getElementById('kataLaluan');
+            let ikon = document.getElementById('ikonMata');
+            if (input.type === "password") {
+                input.type = "text";
+                ikon.classList.remove('fa-eye-slash');
+                ikon.classList.add('fa-eye');
+            } else {
+                input.type = "password";
+                ikon.classList.remove('fa-eye');
+                ikon.classList.add('fa-eye-slash');
+            }
+        }
+
+        // MENU SISI
+        function bukaMenu() {
+            document.getElementById('menuSisi').classList.add('buka');
+            document.getElementById('lapisanTutup').classList.add('aktif');
+        }
+        function tutupMenu() {
+            document.getElementById('menuSisi').classList.remove('buka');
+            document.getElementById('lapisanTutup').classList.remove('aktif');
+        }
+
+        // SEMAK LOGIN
+        function semakLogin() {
+            let user = document.getElementById('namaPengguna').value.trim();
+            let pass = document.getElementById('kataLaluan').value.trim();
+            let notif = document.getElementById('notif');
+
+            if (user === "Admin" && pass === "755") {
+                notif.className = "block mb-6 py-3 px-4 rounded-lg text-center font-semibold bg-green-500/20 text-green-400 border border-green-500/30";
+                notif.textContent = "✅ Selamat datang! Sedang alihkan ke sistem utama...";
+                setTimeout(bukaHalaman3, 1300);
+            } else {
+                notif.className = "block mb-6 py-3 px-4 rounded-lg text-center font-semibold bg-red-500/20 text-red-400 border border-red-500/30";
+                notif.textContent = "❌ GAGAL! Nama pengguna atau kata laluan salah";
+            }
+        }
+
+        // SISTEM BANNED
+        function mulakanSistem() {
+            let nombor = document.getElementById('nombor').value.trim();
+            let jenis = document.getElementById('jenis').value;
+            let logKotak = document.getElementById('logKotak');
+
+            if (!nombor) {
+                logKotak.innerHTML += `<p class="text-amber-400 text-sm mt-1">⚠️ SILA ISIKAN NOMBOR TELEFON DAHULU!</p>`;
+                return;
+            }
+
+            logKotak.innerHTML += `<p class="text-merahTerang text-sm mt-1">🚀 Mula proses untuk nombor: ${nombor}</p>`;
+            logKotak.innerHTML += `<p class="text-gray-400 text-sm">⚙️ Kaedah dipilih: ${jenis}</p>`;
+            logKotak.innerHTML += `<p class="text-hijau text-sm">✅ Proses sedang berjalan... Sila tunggu sebentar</p>`;
+            logKotak.scrollTop = logKotak.scrollHeight;
+        }
+
+        // BUAT BINTANG LATAR BELAKANG
+        const kontena = document.getElementById('bintangKonteks');
+        for (let i = 0; i < 45; i++) {
+            const bintang = document.createElement('div');
+            bintang.classList.add('bintang');
+            if (Math.random() > 0.75) bintang.classList.add('bintang-merah');
+            bintang.style.left = `${Math.random() * 100}%`;
+            bintang.style.top = `${Math.random() * 100}%`;
+            bintang.style.animationDelay = `${Math.random() * 4}s`;
+            kontena.appendChild(bintang);
+        }
+    </script>
+
+</body>
+</html>
